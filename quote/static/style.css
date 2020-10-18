@@ -1,0 +1,22 @@
+body {
+    background-color: lightblue;
+  }
+  
+  h1 {
+    color: white;
+    text-align: center;
+  }
+  
+  #quotedetails {
+    vertical-align: middle;
+    text-align: center;
+    font-family: verdana;
+    font-size: 20px;
+    margin-top: 20%;
+}
+  #quote {
+   
+  }
+  #author {
+    
+  }

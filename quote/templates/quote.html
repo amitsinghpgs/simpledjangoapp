@@ -1,0 +1,7 @@
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+<div id='quotedetails'>
+<p id='quote'>{{ object.quote }}</p>
+    <br><br>
+<p id='author'>- {{ object.author }}</p>
+</div>
