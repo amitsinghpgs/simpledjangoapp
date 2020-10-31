@@ -35,9 +35,13 @@ def signup(request):
             email.send()
             return HttpResponse(
                 'Please confirm your email address to complete the registration')
-    else:
-        form = SignupForm()
-    return render(request, 'registration/signup.html', {'form': form})
+    form = SignupForm()
+    context = {
+            'form': form,
+            'render_login_signup' : True,
+            'login_class': 'inactive underlineHover',
+            'sign_up_class': 'active'}
+    return render(request, 'registration/login.html', context)
 
 
 def view_activate(request, uidb64, token):
@@ -52,15 +56,18 @@ def view_activate(request, uidb64, token):
         login(request, user)
         return HttpResponse(
             'Thank you for your email confirmation. Now you can login your account.')
-    else:
-        return HttpResponse('Activation link is invalid!')
+    return HttpResponse('Activation link is invalid!')
 
 
 class LoginView(auth_views.LoginView):
     template_name = 'registration/login.html'
 
     def get(self, request):
-        context = {'form': self.form_class}
+        context = {
+            'form': self.form_class,
+            'render_login_signup' : True,
+            'login_class': 'active',
+            'sign_up_class': 'inactive underlineHover'}
         return render(request, self.template_name, context)
 
     def post(self, request):
@@ -81,11 +88,12 @@ class LogoutView(auth_views.LogoutView):
 
 
 class PasswordResetView(auth_views.PasswordResetView):
-    template_name = 'registration/password_reset.html'
+    template_name = 'registration/login.html'
     form_class = PasswordResetForm
 
     def get(self, request):
-        context = {'form': self.form_class}
+        context = {'form': self.form_class,
+        'render_login': True}
         return render(request, self.template_name, context)
 
     def post(self, request):
@@ -108,5 +116,5 @@ class PasswordResetView(auth_views.PasswordResetView):
 
 
 class PasswordResetConfirmView(auth_views.PasswordResetConfirmView):
-    template_name = 'registration/password_do_reset.html'
+    template_name = 'registration/login.html'
     success_url = reverse_lazy('view_login')

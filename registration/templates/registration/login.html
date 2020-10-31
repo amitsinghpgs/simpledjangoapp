@@ -2,21 +2,42 @@
 {% extends "registration/base.html" %} {% block content %}
 <div class="wrapper fadeInDown">
   <div id="formContent">
+    {% if render_login_signup %}
     <!-- Tabs Titles -->
-    <h2 class="active"><a href="{% url 'view_login' %}">Log In</a> </h2>
-    <h2 class="inactive underlineHover"><a href="{% url 'view_signup' %}">Sign Up</a>  </h2>
-
+    <h2 class="{{ login_class }}"><a href="{% url 'view_login' %}">Log In</a> </h2>
+    <h2 class="{{ sign_up_class }}"><a href="{% url 'view_signup' %}">Sign Up</a>  </h2>
+    {% endif %}
     <!-- Login Form -->
-    <form method="POST"> {% csrf_token %}
-      <input type="text" id="login" class="fadeIn second" name="username" placeholder="login">
-      <input type="password" id="password" class="fadeIn third" name="password" placeholder="password">
-      <input type="submit" class="fadeIn fourth" value="Log In">
+    <form method="post">
+      {% csrf_token %}
+        {% for field in form %}
+        <p>
+          {{ field.label_tag }}<br>
+          {{ field }}
+          {% if field.help_text %}
+            <small style="display: none">{{ field.help_text }}</small>
+          {% endif %}
+          {% for error in field.errors %}
+            <p style="color: red">{{ error }}</p>
+          {% endfor %}
+        </p>
+        {% endfor %}
+      <input type="submit" class="fadeIn fourth">
     </form>
-
+    
+    {% if render_login_signup %}
     <!-- Remind Passowrd -->
     <div id="formFooter">
       <a class="underlineHover" href="{% url 'view_passreset' %}">Forgot Password?</a>
     </div>
+    {% endif %}
+
+    {% if render_login %}
+        <!-- Remind Passowrd -->
+        <div id="formFooter">
+          <a class="underlineHover" href="{% url 'view_login' %}">Login</a>
+        </div>
+        {% endif %}
 
   </div>
 </div>
