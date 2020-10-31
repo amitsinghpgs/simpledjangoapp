@@ -2,6 +2,7 @@ from django.shortcuts import render
 from .models import Quote
 import random
 from django.contrib.auth import logout
+
 # Create your views here.
 def view_quote(request):
     user = request.user
