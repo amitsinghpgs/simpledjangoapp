@@ -1,0 +1,32 @@
+{% extends "registration/base.html" %} {% block content %}
+<div class="wrapper fadeInDown">
+  <div id="formContent">
+    <!-- Tabs Titles -->
+    <h2 class="inactive underlineHover"><a href="{% url 'view_login' %}">Log In</a> </h2>
+    <h2 class="active"><a href="{% url 'view_signup' %}">Sign Up</a>  </h2>
+
+    <form method="post">
+      {% csrf_token %}
+        {% for field in form %}
+        <p>
+          {{ field.label_tag }}<br>
+          {{ field }}
+          {% if field.help_text %}
+            <small style="display: none">{{ field.help_text }}</small>
+          {% endif %}
+          {% for error in field.errors %}
+            <p style="color: red">{{ error }}</p>
+          {% endfor %}
+        </p>
+        {% endfor %}
+      <input type="submit" class="fadeIn fourth">
+    </form>
+
+    <!-- Remind Passowrd -->
+    <div id="formFooter">
+      <a class="underlineHover" href="{% url 'view_passreset' %}">Forgot Password?</a>
+    </div>
+
+  </div>
+</div>
+{% endblock %}

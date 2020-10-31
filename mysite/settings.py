@@ -32,6 +32,7 @@ ALLOWED_HOSTS=['*']
 
 INSTALLED_APPS = [
     'quote',
+    'registration',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -124,3 +125,4 @@ STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 ]
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

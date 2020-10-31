@@ -1,14 +1,19 @@
 {% load static %}
-<link
-  rel="stylesheet"
-  href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
-/>
-<link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
-
-<div id="quotedetails" class="card blue-grey darken-1">
-  <div class="card-content white-text">
-    <p id="quote">{{ object.quote }}</p>
-    <br /><br />
-    <p id="author">- {{ object.author }}</p>
+<link rel="stylesheet" type="text/css" href="{% static 'quote/style.css' %}" />
+<body>
+  <div id="usertab" class="card blue-grey darken-1">
+    {% if user.is_authenticated %}
+      Welcome, {{ user.get_username }}. Thanks for logging in.
+      <a href="{% url 'view_logout' %}">Logout</a>
+    {% else %}
+    <a href="{% url 'view_login' %}">Login</a>
+    {% endif %}
   </div>
-</div>
+  <div id="quotedetails">
+    <div>
+      <p id="quote">{{ object.quote }}</p>
+      <br /><br />
+      <p id="author">- {{ object.author }}</p>
+    </div>
+  </div>
+</body>
