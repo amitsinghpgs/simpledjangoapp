@@ -1,0 +1,55 @@
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'registration/style_user_details.css' %}" />
+<body>
+  <div id="sidebar">
+    <h2 class="sidelinks"><a href="{% url 'view_quote' %}">Quotes</a></h2>
+    <h2 class="{{ class_user_details }}"><a href="{% url 'view_user_details' %}">User Details</a></h2>
+    <h2 class="{{ class_my_quotes }}"><a href="{% url 'view_my_quotes' %}">My Quotes</a></h2>
+    <h2 class="{{ class_create_quote }}"><a href="{% url 'view_create_quote' %}">Create Quotes</a></h2>
+  </div>
+  
+  <div id="content">
+    <div class="user_details">
+    <!-- if user details option is selected in sidebar -->
+    {% if user_details %}
+    {% for key, value in fields.items %}
+    {{ key }}: {{ value }}<br>
+    {% endfor %}
+    {% endif %}
+    
+    <!-- if create quote option is selected in sidebar -->
+    {% if create_quote %}
+    <form method="post">
+      {% csrf_token %}
+    {% for field in form %}
+        <p>
+          {{ field.label_tag }}<br>
+          {{ field }}<br>
+          {% if field.help_text %}
+          {{ field.help_text }}
+          {% endif %}
+          {% for error in field.errors %}
+            <p style="color: red">{{ error }}</p>
+          {% endfor %}
+        </p>
+        {% endfor %}
+        <input type="submit" class="fadeIn fourth">
+      </form>
+    {% endif %}
+
+    <!-- if view my quotes option is selected in sidebar -->
+    {% if my_quotes %}
+    <h1>
+      {% for quote in all_quotes %}
+      {{ quote.quote }}<br>
+      <form action="{% url 'view_delete_quote' quote.pk %}" method="post">
+        {% csrf_token %}
+        <input type="submit" class="deletebutton" value="Delete Quote" />
+    </form>
+      {% endfor %}
+    </h1>
+    {% endif %}
+  </div>
+  </div>
+  </div>
+</body>

@@ -2,9 +2,10 @@
 <link rel="stylesheet" type="text/css" href="{% static 'quote/style.css' %}" />
 <body>
   <div id="usertab">
-    {% if user.is_authenticated %}
-      Welcome, {{ user.get_username }}. Thanks for logging in.
-      <a href="{% url 'view_logout' %}">Logout</a>
+    {% if user.is_authenticated %} Welcome,
+    <a href="{% url 'view_user_details' %}"> {{ user.get_username }}</a>. Thanks
+    for logging in.
+    <a href="{% url 'view_logout' %}">Logout</a>
     {% else %}
     <a href="{% url 'view_login' %}">Login</a>
     {% endif %}
