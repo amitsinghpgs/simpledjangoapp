@@ -10,7 +10,10 @@ from .models import Quote
 def view_quote(request):
     user = request.user
     obj = Quote.objects.all()
-    obj = obj[random.randint(0, len(obj))]
+    if len(obj)==0:
+        obj=None
+    else:
+        obj = obj[random.randint(0, len(obj)-1)]
     context = {
         'object': obj,
         'user': user
